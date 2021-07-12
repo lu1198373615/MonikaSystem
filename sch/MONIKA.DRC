@@ -1,0 +1,64 @@
+Date and Time : 03/21/21 13:07:54
+
+--------------------------------------------------
+Checking Schematic: SCHEMATIC1
+--------------------------------------------------
+Checking Electrical Rules 
+
+Checking For Single Node Nets
+WARNING(ORCAP-1600): Net has fewer than two connections DA_D6 
+                    SCHEMATIC1, DAC  (10.10, 10.10) 
+WARNING(ORCAP-1600): Net has fewer than two connections DA_D3 
+                    SCHEMATIC1, DAC  (10.10, 11.40) 
+WARNING(ORCAP-1600): Net has fewer than two connections DA_D9 
+                    SCHEMATIC1, DAC  (10.10, 9.50) 
+WARNING(ORCAP-1600): Net has fewer than two connections DA_D1 
+                    SCHEMATIC1, DAC  (10.10, 11.80) 
+WARNING(ORCAP-1600): Net has fewer than two connections DA_CLK 
+                    SCHEMATIC1, DAC  (10.10, 8.70) 
+WARNING(ORCAP-1600): Net has fewer than two connections DA_D7 
+                    SCHEMATIC1, DAC  (10.10, 9.90) 
+WARNING(ORCAP-1600): Net has fewer than two connections DA_D5 
+                    SCHEMATIC1, DAC  (10.10, 11.00) 
+WARNING(ORCAP-1600): Net has fewer than two connections DA_D11 
+                    SCHEMATIC1, DAC  (10.10, 9.10) 
+WARNING(ORCAP-1600): Net has fewer than two connections DA_D2 
+                    SCHEMATIC1, DAC  (10.10, 11.60) 
+WARNING(ORCAP-1600): Net has fewer than two connections DA_D8 
+                    SCHEMATIC1, DAC  (10.10, 9.70) 
+WARNING(ORCAP-1600): Net has fewer than two connections DA_D4 
+                    SCHEMATIC1, DAC  (10.10, 11.20) 
+WARNING(ORCAP-1600): Net has fewer than two connections DA_D10 
+                    SCHEMATIC1, DAC  (10.10, 9.30) 
+WARNING(ORCAP-1600): Net has fewer than two connections DA_D0 
+                    SCHEMATIC1, DAC  (10.10, 12.00) 
+WARNING(ORCAP-1600): Net has fewer than two connections AD_D4 
+                    SCHEMATIC1, ADC  (27.98, 16.10) 
+WARNING(ORCAP-1600): Net has fewer than two connections AD_D1 
+                    SCHEMATIC1, ADC  (27.98, 16.70) 
+WARNING(ORCAP-1600): Net has fewer than two connections AD_D8 
+                    SCHEMATIC1, ADC  (27.88, 14.40) 
+WARNING(ORCAP-1600): Net has fewer than two connections AD_OR 
+                    SCHEMATIC1, ADC  (5.70, 12.20) 
+WARNING(ORCAP-1600): Net has fewer than two connections AD_D10 
+                    SCHEMATIC1, ADC  (27.88, 14.00) 
+WARNING(ORCAP-1600): Net has fewer than two connections AD_D6 
+                    SCHEMATIC1, ADC  (27.88, 14.80) 
+WARNING(ORCAP-1600): Net has fewer than two connections AD_D5 
+                    SCHEMATIC1, ADC  (27.98, 15.90) 
+WARNING(ORCAP-1600): Net has fewer than two connections AD_D0 
+                    SCHEMATIC1, ADC  (27.98, 16.90) 
+WARNING(ORCAP-1600): Net has fewer than two connections AD_D11 
+                    SCHEMATIC1, ADC  (27.90, 13.60) 
+WARNING(ORCAP-1600): Net has fewer than two connections AD_D9 
+                    SCHEMATIC1, ADC  (27.88, 14.20) 
+WARNING(ORCAP-1600): Net has fewer than two connections AD_D3 
+                    SCHEMATIC1, ADC  (27.98, 16.30) 
+WARNING(ORCAP-1600): Net has fewer than two connections AD_D2 
+                    SCHEMATIC1, ADC  (27.98, 16.50) 
+WARNING(ORCAP-1600): Net has fewer than two connections AD_D7 
+                    SCHEMATIC1, ADC  (27.88, 14.60) 
+WARNING(ORCAP-1600): Net has fewer than two connections AD_DCO 
+                    SCHEMATIC1, ADC  (5.70, 11.60) 
+
+Checking For Unconnected Bus Nets
