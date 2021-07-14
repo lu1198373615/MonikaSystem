@@ -1,0 +1,139 @@
+module pingpang_fifo (
+	input clk, reset_n,
+	input [11:0] data_in,
+	input w_cs_n, w_dclk,
+	output [11:0] w_miso,
+	output sclr_ping_, sclr_pang_, rd_ping_, rd_pang_, wr_ping_, wr_pang_,
+	output [1:0] state
+);
+	
+	parameter PING_CLEAR = 2'b00;
+	parameter PANG_READ  = 2'b01;
+	parameter PANG_CLEAR = 2'b10;
+	parameter PING_READ  = 2'b11;
+ 
+	//内部信号声明
+	reg [1:0] current_state;
+	reg [1:0] next_state;
+	
+	//描述状态转移
+	always @ (posedge clk or negedge reset_n) begin
+		if(!reset_n)
+			current_state <= PING_CLEAR;
+		else
+			current_state <= next_state;
+	end
+	assign state = current_state;
+	
+	reg w_cs_n_buf,w_cs_n_buf1;
+	always @(posedge clk)
+		w_cs_n_buf <= w_cs_n;
+	always @(posedge clk)
+		w_cs_n_buf1 <= w_cs_n_buf;
+		
+	reg csup, csdn;
+	always @(posedge clk)
+		if (w_cs_n_buf1==1'b0 && w_cs_n==1'b1)
+			csup <= 1'd1;
+		else
+			csup <= 1'd0;
+	always @(posedge clk)
+		if (w_cs_n_buf1==1'b1 && w_cs_n==1'b0)
+			csdn <= 1'd1;
+		else
+			csdn <= 1'd0;
+	//组合逻辑判断状态转移条件
+	always @ (posedge clk or negedge reset_n)
+		if (!reset_n)
+			next_state <= PING_CLEAR;
+		else
+			case(current_state)
+				PING_CLEAR:	begin
+									if (csdn) next_state <= PANG_READ;//cs_n下降沿
+									else	next_state <= PING_CLEAR;
+								end
+				PANG_READ:  begin
+									if (csup) next_state <= PANG_CLEAR;//cs_n上升沿
+									else	next_state <= PANG_READ;
+								end
+				PANG_CLEAR: begin
+									if (csdn) next_state <= PING_READ;//cs_n下降沿
+									else next_state <= PANG_CLEAR;
+								end
+				PING_READ:  begin
+									if (csup) next_state <= PING_CLEAR;//cs_n上升沿
+									else	next_state <= PING_READ;
+								end
+			endcase
+	
+	//同步时序描述状态输出
+	reg sclr_ping, sclr_pang, rd_ping, rd_pang, wr_ping, wr_pang;
+	always @(posedge clk or negedge reset_n)
+		if (!reset_n)
+			begin
+								sclr_ping <= 1'd1;		sclr_pang <= 1'd1;//双清
+								rd_ping <= 1'd0;		rd_pang <= 1'd0;
+								wr_ping <= 1'd0;		wr_pang <= 1'd0;
+			end
+		else
+			case(current_state)
+				PING_CLEAR:	begin
+								sclr_ping <= 1'd1;		sclr_pang <= 1'd0;//清ping
+								rd_ping <= 1'd0;		rd_pang <= 1'd0;//写pang
+								wr_ping <= 1'd0;		wr_pang <= 1'd1;
+								end
+				PANG_READ:  begin
+								sclr_ping <= 1'd0;		sclr_pang <= 1'd0;//不清
+								rd_ping <= 1'd0;		rd_pang <= 1'd1;//读pang写ping
+								wr_ping <= 1'd1;		wr_pang <= 1'd0;
+								end
+				PANG_CLEAR: begin
+								sclr_ping <= 1'd0;		sclr_pang <= 1'd1;//清pang写ping
+								rd_ping <= 1'd0;		rd_pang <= 1'd0;//写ping
+								wr_ping <= 1'd1;		wr_pang <= 1'd0;
+								end
+				PING_READ:  begin
+								sclr_ping <= 1'd0;		sclr_pang <= 1'd0;//不清
+								rd_ping <= 1'd1;		rd_pang <= 1'd0;//读ping写pang
+								wr_ping <= 1'd0;		wr_pang <= 1'd1;
+								end
+			endcase
+	assign sclr_ping_ = sclr_ping;
+	assign sclr_pang_ = sclr_pang;
+	assign rd_ping_ = rd_ping;
+	assign rd_pang_ = rd_pang;
+	assign wr_ping_ = wr_ping;
+	assign wr_pang_ = wr_pang;
+
+	wire [11:0] data_ping, data_pang;
+	my_fifo ping (
+		.aclr(sclr_ping),
+		.data(data_in),
+		.rdclk(w_dclk),
+		.rdreq(rd_ping),
+		.wrclk(clk),
+		.wrreq(wr_ping),
+		.q(data_ping)
+	);
+	my_fifo pang (
+		.aclr(sclr_pang),
+		.data(data_in),
+		.rdclk(w_dclk),
+		.rdreq(rd_pang),
+		.wrclk(clk),
+		.wrreq(wr_pang),
+		.q(data_pang)
+	);
+	reg [11:0] data_pingpang;
+	always @(posedge clk)
+		if (current_state==PING_READ)
+			data_pingpang <= data_ping;
+		else if (current_state==PANG_READ)
+			data_pingpang <= data_pang;
+		else
+			data_pingpang <= 12'd0;
+	assign w_miso = data_pingpang;
+endmodule
+	
+	
+	

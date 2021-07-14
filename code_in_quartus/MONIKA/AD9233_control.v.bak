@@ -1,0 +1,10 @@
+module AD9233_control (
+	input clk, reest_n, key_up, key_down,
+	input [11:0] AD9233,
+	output [3:0] BIT_GAIN,
+	output DENB
+);
+	
+	
+	
+	

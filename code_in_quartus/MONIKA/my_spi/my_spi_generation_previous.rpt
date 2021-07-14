@@ -1,0 +1,28 @@
+Info: Starting: Create block symbol file (.bsf)
+Info: qsys-generate E:\luxiangyu\filterVerilog\E18_1_MONIKA\my_spi.qsys --block-symbol-file --output-directory=E:\luxiangyu\filterVerilog\E18_1_MONIKA\my_spi --family="Cyclone IV E" --part=EP4CE115F23I7
+Progress: Loading E18_1_MONIKA/my_spi.qsys
+Progress: Reading input file
+Progress: Adding spislave_0 [spislave 17.1]
+Progress: Parameterizing module spislave_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: qsys-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: qsys-generate E:\luxiangyu\filterVerilog\E18_1_MONIKA\my_spi.qsys --synthesis=VERILOG --output-directory=E:\luxiangyu\filterVerilog\E18_1_MONIKA\my_spi\synthesis --family="Cyclone IV E" --part=EP4CE115F23I7
+Progress: Loading E18_1_MONIKA/my_spi.qsys
+Progress: Reading input file
+Progress: Adding spislave_0 [spislave 17.1]
+Progress: Parameterizing module spislave_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: my_spi: Generating my_spi "my_spi" for QUARTUS_SYNTH
+Info: spislave_0: "my_spi" instantiated spislave "spislave_0"
+Info: my_spi: Done "my_spi" with 2 modules, 2 files
+Info: qsys-generate succeeded.
+Info: Finished: Create HDL design files for synthesis

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system name="$${FILENAME}">
+ <component
+   name="$${FILENAME}"
+   displayName="$${FILENAME}"
+   version="1.0"
+   description=""
+   tags="INTERNAL_COMPONENT=true"
+   categories="" />
+ <parameter name="bonusData"><![CDATA[bonusData 
+{
+   element spislave_0
+   {
+      datum _sortIndex
+      {
+         value = "0";
+         type = "int";
+      }
+   }
+}
+]]></parameter>
+ <parameter name="clockCrossingAdapter" value="HANDSHAKE" />
+ <parameter name="device" value="EP4CE115F23I7" />
+ <parameter name="deviceFamily" value="Cyclone IV E" />
+ <parameter name="deviceSpeedGrade" value="7" />
+ <parameter name="fabricMode" value="QSYS" />
+ <parameter name="generateLegacySim" value="false" />
+ <parameter name="generationId" value="0" />
+ <parameter name="globalResetBus" value="false" />
+ <parameter name="hdlLanguage" value="VERILOG" />
+ <parameter name="hideFromIPCatalog" value="true" />
+ <parameter name="lockedInterfaceDefinition" value="" />
+ <parameter name="maxAdditionalLatency" value="1" />
+ <parameter name="projectName" value="" />
+ <parameter name="sopcBorderPoints" value="false" />
+ <parameter name="systemHash" value="0" />
+ <parameter name="testBenchDutName" value="" />
+ <parameter name="timeStamp" value="0" />
+ <parameter name="useTestBenchNamingPattern" value="false" />
+ <instanceScript></instanceScript>
+ <interface
+   name="avalon_streaming_sink"
+   internal="spislave_0.avalon_streaming_sink"
+   type="avalon_streaming"
+   dir="end">
+  <port name="stsinkvalid" internal="stsinkvalid" />
+  <port name="stsinkdata" internal="stsinkdata" />
+  <port name="stsinkready" internal="stsinkready" />
+ </interface>
+ <interface
+   name="avalon_streaming_source"
+   internal="spislave_0.avalon_streaming_source"
+   type="avalon_streaming"
+   dir="start">
+  <port name="stsourceready" internal="stsourceready" />
+  <port name="stsourcevalid" internal="stsourcevalid" />
+  <port name="stsourcedata" internal="stsourcedata" />
+ </interface>
+ <interface
+   name="clock_sink"
+   internal="spislave_0.clock_sink"
+   type="clock"
+   dir="end">
+  <port name="sysclk" internal="sysclk" />
+ </interface>
+ <interface
+   name="clock_sink_reset"
+   internal="spislave_0.clock_sink_reset"
+   type="reset"
+   dir="end">
+  <port name="nreset" internal="nreset" />
+ </interface>
+ <interface
+   name="export_0"
+   internal="spislave_0.export_0"
+   type="conduit"
+   dir="end">
+  <port name="mosi" internal="mosi" />
+  <port name="nss" internal="nss" />
+  <port name="miso" internal="miso" />
+  <port name="sclk" internal="sclk" />
+ </interface>
+ <module
+   name="spislave_0"
+   kind="spislave"
+   version="17.1"
+   enabled="1"
+   autoexport="1">
+  <parameter name="AUTO_CLOCK_SINK_CLOCK_RATE" value="0" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV E" />
+  <parameter name="SYNC_DEPTH" value="3" />
+ </module>
+ <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
+ <interconnectRequirement for="$system" name="qsys_mm.enableEccProtection" value="FALSE" />
+ <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="FALSE" />
+ <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
+</system>
