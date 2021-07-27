@@ -25,7 +25,7 @@ Cadence套件：使用OrCAD绘制原理图、使用Allegro绘制PCB
 + FPGA端程序设计       
 Altera公司工具：Quartus Primer 17.1、Modelsim-Altera、SignalTab等       
 + 树莓派端程序设计      
-Python 3.x，用到的pypi库包括但不限于`pyqt5`、`matplotlib`       
+Python 3.x，用到的pypi库包括但不限于`pyqt5`、`matplotlib`、`numpy`       
 操作GPIO用的是`wiringPi-Python`包，底层的`wiringpi.c`文件需要稍作修改：[修改说明](https://github.com/lu1198373615/MonikaSystem/blob/master/MODIFY.md)。
 ## 技术介绍
 + [硬件篇--自制FPGA开发板介绍](https://github.com/lu1198373615/MonikaSystem/blob/master/HARDWARE.MD)   
