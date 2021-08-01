@@ -1,8 +1,6 @@
 from SignalGenerator import *
 from Oscilloscope import *
 from OscilloscopeApFFT import *
-from VelocityMeasurement import *
-from DOAMeasurement import *
 
 from PyQt5.QtWidgets import (QWidget, QSlider, QApplication, QDesktopWidget, QLabel, QGridLayout, QStackedWidget,
                              QHBoxLayout, QVBoxLayout, QSpinBox, QListWidget)
@@ -51,5 +49,3 @@ if __name__ == '__main__':
     demo = Monika()
     demo.show()
     sys.exit(app.exec_())
-
-
