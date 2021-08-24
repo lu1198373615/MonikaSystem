@@ -40,6 +40,10 @@ _（已经写完了，本部分展示了波形显示和频率测量的效果图�
 _（期待您的程序为本开发板增加功能哦(づ￣ 3￣)づ）_     
 
 
+## 附录
+
++ [小测试--树莓派4B使用wiringpi操作GPIO的速度](https://github.com/lu1198373615/MonikaSystem/blob/master/time_of_wiringpi.md)    
+
 # 完结，撒花~~~
 
 
