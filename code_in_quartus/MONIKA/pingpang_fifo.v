@@ -1,19 +1,32 @@
 module pingpang_fifo (
 	input clk, reset_n,
 	input [11:0] data_in,
-	input w_cs_n, w_dclk,
-	input tongbu,
-	output [11:0] w_miso,
-	output sclr_ping_, sclr_pang_, rd_ping_, rd_pang_, wr_ping_, wr_pang_,
-	output [1:0] state
+	input w_cs_n_input, w_dclk_input,
+	output [11:0] w_miso
 );
 	
+	//输入信号滤波--树莓派GPIO过来的信号是异步信号，需要向本时钟域同步
+	reg w_cs_n_buf_one, w_cs_n_buf_two, w_cs_n_buf_three, w_cs_n;
+	always @(posedge clk) begin
+		w_cs_n_buf_one <= w_cs_n_input;
+		w_cs_n_buf_two <= w_cs_n_buf_one;
+		w_cs_n_buf_three <= w_cs_n_buf_two;
+		w_cs_n <= w_cs_n_buf_three;
+	end
+	reg w_dclk_buf_one, w_dclk_buf_two, w_dclk_buf_three, w_dclk;
+	always @(posedge clk) begin
+		w_dclk_buf_one <= w_dclk_input;
+		w_dclk_buf_two <= w_dclk_buf_one;
+		w_dclk_buf_three <= w_dclk_buf_two;
+		w_dclk <= w_dclk_buf_three;
+	end
+	
+
+	//内部信号声明
 	parameter PING_CLEAR = 2'b00;
 	parameter PANG_READ  = 2'b01;
 	parameter PANG_CLEAR = 2'b10;
 	parameter PING_READ  = 2'b11;
- 
-	//内部信号声明
 	reg [1:0] current_state;
 	reg [1:0] next_state;
 	
@@ -24,48 +37,15 @@ module pingpang_fifo (
 		else
 			current_state <= next_state;
 	end
-	assign state = current_state;
-	
-	reg w_cs_n_buf,w_cs_n_buf1;
-	always @(posedge clk)
-		w_cs_n_buf <= w_cs_n;
-	always @(posedge clk)
-		w_cs_n_buf1 <= w_cs_n_buf;
-		
-	reg csup, csdn;
-	always @(posedge clk)
-		if (w_cs_n_buf1==1'b0 && w_cs_n==1'b1)
-			csup <= 1'd1;
-		else
-			csup <= 1'd0;
-	always @(posedge clk)
-		if (w_cs_n_buf1==1'b1 && w_cs_n==1'b0)
-			csdn <= 1'd1;
-		else
-			csdn <= 1'd0;
+
 	//组合逻辑判断状态转移条件
-	always @ (posedge clk or negedge reset_n)
-		if (!reset_n)
-			next_state <= PING_CLEAR;
-		else
-			case(current_state)
-				PING_CLEAR:	begin
-									if (csdn) next_state <= PANG_READ;//cs_n下降沿
-									else	next_state <= PING_CLEAR;
-								end
-				PANG_READ:  begin
-									if (csup) next_state <= PANG_CLEAR;//cs_n上升沿
-									else	next_state <= PANG_READ;
-								end
-				PANG_CLEAR: begin
-									if (csdn) next_state <= PING_READ;//cs_n下降沿
-									else next_state <= PANG_CLEAR;
-								end
-				PING_READ:  begin
-									if (csup) next_state <= PING_CLEAR;//cs_n上升沿
-									else	next_state <= PING_READ;
-								end
-			endcase
+	always @ (*)
+		case(current_state)
+			PING_CLEAR:	next_state = ~w_cs_n ? PANG_READ : PING_CLEAR;
+			PANG_READ:  next_state =  w_cs_n ? PANG_CLEAR : PANG_READ;
+			PANG_CLEAR: next_state = ~w_cs_n ? PING_READ : PANG_CLEAR;
+			PING_READ:  next_state =  w_cs_n ? PING_CLEAR : PING_READ;
+		endcase
 	
 	//同步时序描述状态输出
 	reg sclr_ping, sclr_pang, rd_ping, rd_pang, wr_ping, wr_pang;
@@ -99,31 +79,6 @@ module pingpang_fifo (
 								wr_ping <= 1'd0;		wr_pang <= 1'd1;
 								end
 			endcase
-	assign sclr_ping_ = sclr_ping;
-	assign sclr_pang_ = sclr_pang;
-	assign rd_ping_ = rd_ping;
-	assign rd_pang_ = rd_pang;
-	
-	//检测同步信号上升沿
-	/*reg tongbu_buf1, tongbu_buf2, tongbu_up;
-	always @(posedge clk) begin
-		tongbu_buf1 <= tongbu;
-		tongbu_buf2 <= tongbu_buf1;
-	end
-	always @(posedge clk)
-		if(tongbu_buf2==1'd0 && tongbu==1'd1)
-			tongbu_up <= 1'd1;
-		else
-			tongbu_up <= 1'd0;
-	reg wr_ping_en, wr_pang_en;
-	always @(posedge clk)
-		if(tongbu==1'd1)
-			wr_pang_en <= wr_pang;
-	always @(posedge clk)
-		if(tongbu==1'd1)
-			wr_ping_en <= wr_ping;*/
-	assign wr_ping_ = wr_ping;
-	assign wr_pang_ = wr_pang;
 
 	wire [11:0] data_ping, data_pang;
 	my_fifo ping (

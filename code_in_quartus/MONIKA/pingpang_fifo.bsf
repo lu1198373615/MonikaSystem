@@ -20,9 +20,9 @@ refer to the applicable agreement for further details.
 */
 (header "symbol" (version "1.1"))
 (symbol
-	(rect 16 16 224 192)
+	(rect 16 16 224 160)
 	(text "pingpang_fifo" (rect 5 0 58 12)(font "Arial" ))
-	(text "inst" (rect 8 160 20 172)(font "Arial" ))
+	(text "inst" (rect 8 128 20 140)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -47,23 +47,16 @@ refer to the applicable agreement for further details.
 	(port
 		(pt 0 80)
 		(input)
-		(text "w_cs_n" (rect 0 0 31 12)(font "Arial" ))
-		(text "w_cs_n" (rect 21 75 52 87)(font "Arial" ))
+		(text "w_cs_n_input" (rect 0 0 55 12)(font "Arial" ))
+		(text "w_cs_n_input" (rect 21 75 76 87)(font "Arial" ))
 		(line (pt 0 80)(pt 16 80)(line_width 1))
 	)
 	(port
 		(pt 0 96)
 		(input)
-		(text "w_dclk" (rect 0 0 27 12)(font "Arial" ))
-		(text "w_dclk" (rect 21 91 48 103)(font "Arial" ))
+		(text "w_dclk_input" (rect 0 0 50 12)(font "Arial" ))
+		(text "w_dclk_input" (rect 21 91 71 103)(font "Arial" ))
 		(line (pt 0 96)(pt 16 96)(line_width 1))
-	)
-	(port
-		(pt 0 112)
-		(input)
-		(text "tongbu" (rect 0 0 25 12)(font "Arial" ))
-		(text "tongbu" (rect 21 107 46 119)(font "Arial" ))
-		(line (pt 0 112)(pt 16 112)(line_width 1))
 	)
 	(port
 		(pt 208 32)
@@ -71,55 +64,6 @@ refer to the applicable agreement for further details.
 		(text "w_miso[11..0]" (rect 0 0 53 12)(font "Arial" ))
 		(text "w_miso[11..0]" (rect 134 27 187 39)(font "Arial" ))
 		(line (pt 208 32)(pt 192 32)(line_width 3))
-	)
-	(port
-		(pt 208 48)
-		(output)
-		(text "sclr_ping_" (rect 0 0 41 12)(font "Arial" ))
-		(text "sclr_ping_" (rect 146 43 187 55)(font "Arial" ))
-		(line (pt 208 48)(pt 192 48)(line_width 1))
-	)
-	(port
-		(pt 208 64)
-		(output)
-		(text "sclr_pang_" (rect 0 0 44 12)(font "Arial" ))
-		(text "sclr_pang_" (rect 143 59 187 71)(font "Arial" ))
-		(line (pt 208 64)(pt 192 64)(line_width 1))
-	)
-	(port
-		(pt 208 80)
-		(output)
-		(text "rd_ping_" (rect 0 0 35 12)(font "Arial" ))
-		(text "rd_ping_" (rect 152 75 187 87)(font "Arial" ))
-		(line (pt 208 80)(pt 192 80)(line_width 1))
-	)
-	(port
-		(pt 208 96)
-		(output)
-		(text "rd_pang_" (rect 0 0 38 12)(font "Arial" ))
-		(text "rd_pang_" (rect 149 91 187 103)(font "Arial" ))
-		(line (pt 208 96)(pt 192 96)(line_width 1))
-	)
-	(port
-		(pt 208 112)
-		(output)
-		(text "wr_ping_" (rect 0 0 36 12)(font "Arial" ))
-		(text "wr_ping_" (rect 151 107 187 119)(font "Arial" ))
-		(line (pt 208 112)(pt 192 112)(line_width 1))
-	)
-	(port
-		(pt 208 128)
-		(output)
-		(text "wr_pang_" (rect 0 0 40 12)(font "Arial" ))
-		(text "wr_pang_" (rect 147 123 187 135)(font "Arial" ))
-		(line (pt 208 128)(pt 192 128)(line_width 1))
-	)
-	(port
-		(pt 208 144)
-		(output)
-		(text "state[1..0]" (rect 0 0 37 12)(font "Arial" ))
-		(text "state[1..0]" (rect 150 139 187 151)(font "Arial" ))
-		(line (pt 208 144)(pt 192 144)(line_width 3))
 	)
 	(parameter
 		"PING_CLEAR"
@@ -142,7 +86,7 @@ refer to the applicable agreement for further details.
 		""
 		(type "PARAMETER_UNSIGNED_BIN")	)
 	(drawing
-		(rectangle (rect 16 16 192 160)(line_width 1))
+		(rectangle (rect 16 16 192 128)(line_width 1))
 	)
 	(annotation_block (parameter)(rect 224 -64 324 16))
 )
