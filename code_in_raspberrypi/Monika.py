@@ -1,11 +1,9 @@
 from SignalGenerator import *
 from Oscilloscope import *
 from OscilloscopeApFFT import *
-
-from PyQt5.QtWidgets import (QWidget, QSlider, QApplication, QDesktopWidget, QLabel, QGridLayout, QStackedWidget,
-                             QHBoxLayout, QVBoxLayout, QSpinBox, QListWidget)
-from PyQt5.QtCore import QObject, Qt, pyqtSignal
-from PyQt5.QtGui import QPainter, QFont, QColor, QPen
+from PyQt5.QtWidgets import (QWidget, QApplication, QDesktopWidget, QStackedWidget,
+                             QHBoxLayout, QListWidget)
+from PyQt5.QtGui import QFont
 import sys
 
 
@@ -24,8 +22,8 @@ class Monika(QWidget):
             self.topQStackedWidget.setCurrentIndex(i)
 
         self.leftQListWidget.insertItem(0, '1.调制波形设置')
-        self.leftQListWidget.insertItem(1, '2.CZT算法测距')
-        self.leftQListWidget.insertItem(2, '3.全相位FFT算法测距')
+        self.leftQListWidget.insertItem(1, '2.FFT+CZT算法测频')
+        self.leftQListWidget.insertItem(2, '3.全相位FFT算法测频')
         self.leftQListWidget.setFont(QFont('Serif', 20))
         self.leftQListWidget.currentRowChanged[int].connect(display)
         self.leftQListWidget.setMinimumSize(300, 1)

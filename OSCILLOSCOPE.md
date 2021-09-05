@@ -95,8 +95,8 @@ _懒得介绍。。。_
 
 需要要注意的是：树莓派GPIO过来的信号是异步信号，需要向本时钟域同步。
 这里采用的跨时钟域处理方法是使用多级D触发器消除亚稳态（其实两级D触发器就可以的，但咱们今天偏要用四级，有钱任性）       
+[在pingpang_fifo.v文件中](https://github.com/lu1198373615/MonikaSystem/blob/master/code_in_quartus/MONIKA/pingpang_fifo.v)     
 ```verilog
-//在pingpang_fifo.v文件中
 //输入信号滤波--树莓派GPIO过来的信号是异步信号，需要向本时钟域同步
 	reg w_cs_n_buf_one, w_cs_n_buf_two, w_cs_n_buf_three, w_cs_n;
 	always @(posedge clk) begin

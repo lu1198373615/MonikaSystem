@@ -34,5 +34,4 @@ module reg_core (
 	assign waveform = register0[3:0];
 	assign bit_gain = register5[3:0];
 endmodule
-
-			
+		

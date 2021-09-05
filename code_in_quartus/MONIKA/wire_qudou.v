@@ -11,9 +11,9 @@ module wire_qudou (
 			state <= 4'd0;
 		else if (keynow == keyin)//不变
 			state <= 4'd0;
-		else if (state<4'd4)						//按键按下时间不足
+		else if (state<4'd4)//按键按下时间不足
 			state <= state + 4'd1;
-		else											//按键按下了足够的时间，但是希望按键松开才能使state归位
+		else//按键按下了足够的时间，但是希望按键松开才能使state归位
 			state <= state;
 	
 	always @(posedge clk)
@@ -25,6 +25,3 @@ module wire_qudou (
 			keynow <= keynow;
 	assign keyout = keynow;
 endmodule
-
-	
-	

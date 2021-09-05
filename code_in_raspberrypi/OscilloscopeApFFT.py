@@ -1,7 +1,7 @@
-from PyQt5.QtWidgets import (QWidget, QSlider, QApplication, QDesktopWidget, QLabel, QGridLayout, QComboBox,
-                             QHBoxLayout, QVBoxLayout, QSpinBox, QPushButton)
-from PyQt5.QtCore import QObject, Qt, pyqtSignal, QBasicTimer
-from PyQt5.QtGui import QPainter, QFont, QColor, QPen
+from PyQt5.QtWidgets import (QWidget, QApplication, QDesktopWidget, QLabel, QGridLayout, QComboBox,
+                             QSpinBox, QPushButton)
+from PyQt5.QtCore import Qt, QBasicTimer
+from PyQt5.QtGui import QFont
 import sys
 import numpy as np
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FC
@@ -10,9 +10,6 @@ import matplotlib.pyplot as plt
 from MyWSPI import *
 from MyWiringPiSPI import *
 from ApFFTAlgorithm import *
-import time
-
-# plt.rcParams['font.sans-serif'] = ['Serif']
 plt.rcParams['axes.unicode_minus'] = False
 
 
@@ -26,7 +23,6 @@ class OscilloscopeApFFT(QWidget):
         self.f_sample = 100e6
         self.point_sample = 1000
         self.timer = QBasicTimer()
-        #self.timer.start(2000, self)
         if self.timer.isActive():
             self.timer.stop()
         self.fig = plt.figure(figsize=(10, 4), dpi=80)
@@ -101,19 +97,17 @@ class OscilloscopeApFFT(QWidget):
         self.my_paint()
 
     def my_paint(self):
-        #t1 = time.time()
         self.ax.cla()
         y = self.w.fifo_sample(int(self.point_sample))
         x = np.linspace(0, (len(y)-1)/self.f_sample, len(y))
         x = x * 1e6
-        self.ax.plot(x, y)
+        self.ax.plot(np.real(x), np.real(y))
         self.ax.set_xlabel('UNIT : MicroSecond', fontsize=20, verticalalignment='bottom')
         self.ax.axis(ymin=-2100, ymax=2100)
         self.canvas.draw()  # 绘制
         hp = self.c.frequency_measurement(y) * 100e6 / 256
         di = hp*6/1e6
         self.resultQLabel.setText('频率为: ' + '%.1f Hz' % hp)
-        #t2 = time.time()
 
     def timerEvent(self, e):
         self.my_paint()
@@ -134,4 +128,3 @@ if __name__ == '__main__':
     ex = OscilloscopeApFFT()
     ex.show()
     sys.exit(app.exec_())
-

@@ -18,10 +18,8 @@ module DDS_top (
 		else
 			n_cnt <= n_cnt + coe_inc;
 	assign coe_inc_ = coe_inc;
-	assign zhankb = n_cnt<{1'd0,occupation,32'd0}+33'd4294967296 ? 1'd1 : 1'd0;
-	
-	
-	
+	assign zhankb = n_cnt[35:32]<{1'd0,occupation} + 1'd1 ? 1'd1 : 1'd0;
+
 	reg [35:0] phase_control;
 	always @(posedge clk or negedge reset_n)
 		if(!reset_n)
@@ -67,5 +65,3 @@ module DDS_top (
 	assign dds_data = zhankb ? {~data_rom[11],data_rom[10:0]} : 12'd0;
 	assign dds_clk = clk;
 endmodule
-	
-	

@@ -25,8 +25,5 @@ module AD9233_control (
 			DENB <= 1'd1;
 		else
 			DENB <= 1'd0;
-	
 
 endmodule
-	
-	

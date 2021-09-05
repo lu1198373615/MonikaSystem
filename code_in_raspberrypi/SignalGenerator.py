@@ -4,10 +4,7 @@ from MyWaveSelector import *
 from MyWaveShower import *
 from MyWiringPiSPI import *
 
-from PyQt5.QtWidgets import (QWidget, QSlider, QApplication, QDesktopWidget, QLabel, QGridLayout,
-                             QHBoxLayout, QVBoxLayout, QSpinBox)
-from PyQt5.QtCore import QObject, Qt, pyqtSignal
-from PyQt5.QtGui import QPainter, QFont, QColor, QPen
+from PyQt5.QtWidgets import (QWidget, QApplication, QDesktopWidget, QVBoxLayout)
 import sys
 
 

@@ -5,7 +5,8 @@ module pingpang_fifo (
 	output [11:0] w_miso
 );
 	
-	//输入信号滤波--树莓派GPIO过来的信号是异步信号，需要向本时钟域同步
+	//树莓派GPIO过来的信号是异步信号，需要向本时钟域同步
+	//其实这里两级寄存器打拍就可以了，但打四拍没意见吧
 	reg w_cs_n_buf_one, w_cs_n_buf_two, w_cs_n_buf_three, w_cs_n;
 	always @(posedge clk) begin
 		w_cs_n_buf_one <= w_cs_n_input;
@@ -20,7 +21,6 @@ module pingpang_fifo (
 		w_dclk_buf_three <= w_dclk_buf_two;
 		w_dclk <= w_dclk_buf_three;
 	end
-	
 
 	//内部信号声明
 	parameter PING_CLEAR = 2'b00;
@@ -109,6 +109,3 @@ module pingpang_fifo (
 			data_pingpang <= 12'd0;
 	assign w_miso = data_pingpang;
 endmodule
-	
-	
-	

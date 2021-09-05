@@ -85,4 +85,3 @@ always @(posedge clk or negedge reset_n)
 		update <= 1'b0;
 
 endmodule
-
