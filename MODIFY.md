@@ -35,7 +35,7 @@ unsigned int digitalReadByte (void)
 unsigned int digitalReadByte (void)
 {
   int ret;
-  ret = *(gpio + 13);
+  ret = *(gpio + gpioToGPLEV [0]);
   return (ret & 127) + ((ret>>5) & 3968);
 }
 ```

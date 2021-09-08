@@ -53,9 +53,12 @@
 树莓派使用全相位FFT时移相位差频谱矫正法算法正确测量频率并在GUI上显示出了频率测量结果，且频率测量精度高于CZT。     
 
 ## 频率测量算法介绍
+
 ### CZT
+
 _懒得介绍。。。_      
 ### apFFT
+
 _懒得介绍。。。_      
 请参考论文：[基于频移补偿的全相位时移相位差频率估计](https://kns.cnki.net/kcms/detail/detail.aspx?dbcode=CJFD&dbname=CJFDLAST2017&filename=TJDX201706013&v=28%25mmd2BMvfr9X211%25mmd2F0s2JXieNoU2D5BdnrjEbKMo28PyG7PuNl40%25mmd2FpseebzEXKy%25mmd2FxBZ7)       
 
@@ -94,23 +97,19 @@ _懒得介绍。。。_
 上图是乒乓FIFO控制器的状态转换图和时序仿真结果。       
 
 需要要注意的是：树莓派GPIO过来的信号是异步信号，需要向本时钟域同步。
-这里采用的跨时钟域处理方法是使用多级D触发器消除亚稳态（其实两级D触发器就可以的，但咱们今天偏要用四级，有钱任性）       
+这里采用的跨时钟域处理方法是使用两级D触发器消除亚稳态。       
 [在pingpang_fifo.v文件中](https://github.com/lu1198373615/MonikaSystem/blob/master/code_in_quartus/MONIKA/pingpang_fifo.v)     
 ```verilog
 //输入信号滤波--树莓派GPIO过来的信号是异步信号，需要向本时钟域同步
-	reg w_cs_n_buf_one, w_cs_n_buf_two, w_cs_n_buf_three, w_cs_n;
+	reg w_cs_n_buf_one, w_cs_n;
 	always @(posedge clk) begin
 		w_cs_n_buf_one <= w_cs_n_input;
-		w_cs_n_buf_two <= w_cs_n_buf_one;
-		w_cs_n_buf_three <= w_cs_n_buf_two;
-		w_cs_n <= w_cs_n_buf_three;
+		w_cs_n <= w_cs_n_buf_one;
 	end
-	reg w_dclk_buf_one, w_dclk_buf_two, w_dclk_buf_three, w_dclk;
+	reg w_dclk_buf_one, w_dclk;
 	always @(posedge clk) begin
 		w_dclk_buf_one <= w_dclk_input;
-		w_dclk_buf_two <= w_dclk_buf_one;
-		w_dclk_buf_three <= w_dclk_buf_two;
-		w_dclk <= w_dclk_buf_three;
+		w_dclk <= w_dclk_buf_one;
 	end
 ```
 
@@ -126,9 +125,9 @@ def fifo_sample(self,point):
 		wiringpi.digitalWrite(self.w_dclk,0)
 		ccc = wiringpi.digitalReadByte()
 		#print(ccc)
-		if ccc>2047:
-			ccc = ccc - 4096
-		result.append(ccc)
+		if ccc > (2 ** (self.ad_width - 1)) - 1:
+            ccc = ccc - 2 ** self.ad_width
+        result.append(ccc)
 	wiringpi.digitalWrite(self.w_cs_n,1)
 	#time.sleep(0.1)
 	return result
@@ -142,20 +141,4 @@ FPGA中异步FIFO的读时钟处。在w_dclk的上升沿，数据被从FIFO读�
 	   
 	   
 上一部分，[软件篇--“所见即所得”的任意波形发生器设计](https://github.com/lu1198373615/MonikaSystem/blob/master/SIGNALGENERATOR.md)     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
