@@ -74,7 +74,7 @@ wiringpi.wiringPiSPIDataRW(0, bytes([1, 15]))
 <img src='photo/sg_sm_shixu.jpg'/>
     
 仿真时序如上图所示，发送的两字节数据被拆开成了寄存器地址addr和数据data。      
-+ _注意：FPGA中的spi从模块实现方法不唯一，上述方法不一定是最好的，但优化代码不在本文讨论范围_      
+
 ### DDS的实现
 FPGA将spi发来的信号拆开成地址和数据，然后把数据写入寄存器组对应的地址。     
 |  address  |    内容   |
