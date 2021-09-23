@@ -1,12 +1,10 @@
 module DDS_top (
 	input clk,reset_n,
-	input [31:0] inc_phi,
-	input [3:0] occupation,waveform, //占空比和波形类型
+	input [31:0] inc_phi, //频率
+	input [3:0] occupation, waveform, //占空比和波形类型
 	output [11:0] dds_data,
 	output dds_clk,
-	output [19:0] coe_inc_,
-	output zhankb,
-	output tongbu
+	output zhankb
 );
 	
 	wire [35:0] coe_inc;
@@ -17,37 +15,36 @@ module DDS_top (
 			n_cnt <= 36'd0;
 		else
 			n_cnt <= n_cnt + coe_inc;
-	assign coe_inc_ = coe_inc;
-	assign zhankb = n_cnt[35:32]<{1'd0,occupation} + 1'd1 ? 1'd1 : 1'd0;
+	
+	assign zhankb = n_cnt[35:32]<=occupation ? 1'd1 : 1'd0;
 
-	reg [35:0] phase_control;
+	reg [31:0] phase;
 	always @(posedge clk or negedge reset_n)
 		if(!reset_n)
-			phase_control <= 36'd0;
+			phase <= 32'd0;
 		else if (zhankb==1'd0)
-			phase_control <= 36'd0;
+			phase <= 32'd0;
 		else
-			phase_control <= phase_control + {4'd0,inc_phi};
-	assign tongbu = phase_control[31:0]<(inc_phi<<<4) ? 1'd1 : 1'd0;
+			phase <= phase + inc_phi;
 	
 	wire [11:0] data_sin,data_juchi_up,data_juchi_dn,data_sanjiao;
 	rom_sin r1 (
-		.address(phase_control[31:20]),
+		.address(phase[31:20]),
 		.clock(clk),
 		.q(data_sin)
 	);
 	rom_juchi_up r2 (
-		.address(phase_control[31:20]),
+		.address(phase[31:20]),
 		.clock(clk),
 		.q(data_juchi_up)
 	);
 	rom_juchi_dn r3 (
-		.address(phase_control[31:20]),
+		.address(phase[31:20]),
 		.clock(clk),
 		.q(data_juchi_dn)
 	);
 	rom_sanjiao r4 (
-		.address(phase_control[31:20]),
+		.address(phase[31:20]),
 		.clock(clk),
 		.q(data_sanjiao)
 	);

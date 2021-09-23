@@ -75,23 +75,9 @@ refer to the applicable agreement for further details.
 	(port
 		(pt 224 64)
 		(output)
-		(text "coe_inc_[19..0]" (rect 0 0 60 12)(font "Arial" ))
-		(text "coe_inc_[19..0]" (rect 143 59 203 71)(font "Arial" ))
-		(line (pt 224 64)(pt 208 64)(line_width 3))
-	)
-	(port
-		(pt 224 80)
-		(output)
 		(text "zhankb" (rect 0 0 27 12)(font "Arial" ))
-		(text "zhankb" (rect 176 75 203 87)(font "Arial" ))
-		(line (pt 224 80)(pt 208 80)(line_width 1))
-	)
-	(port
-		(pt 224 96)
-		(output)
-		(text "tongbu" (rect 0 0 25 12)(font "Arial" ))
-		(text "tongbu" (rect 178 91 203 103)(font "Arial" ))
-		(line (pt 224 96)(pt 208 96)(line_width 1))
+		(text "zhankb" (rect 176 59 203 71)(font "Arial" ))
+		(line (pt 224 64)(pt 208 64)(line_width 1))
 	)
 	(drawing
 		(rectangle (rect 16 16 208 128)(line_width 1))
